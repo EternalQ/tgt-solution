@@ -128,7 +128,7 @@ main > * { min-width: 0; }
 .chip.open { background: var(--blue-bg); color: var(--blue); }
 .chip.future { border-color: var(--line); color: var(--muted); }
 .legend { margin-top: 12px; font-size: 13px; color: var(--muted); line-height: 2; }
-.legend .chip { margin-left: 8px; }
+.legend .chip { margin-left: 8px; line-height: 1.5; }
 
 .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 .bar-row { display: grid; grid-template-columns: 120px 1fr 120px; gap: 10px; align-items: center; margin-bottom: 6px; font-size: 14px; }

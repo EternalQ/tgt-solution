@@ -47,7 +47,7 @@ function cpState(p, cp, sig) {
 function chip(day, st, title) {
   const s = CP_STATES[st];
   const text = `${title ? `День ${day} · ${title}` : `День ${day}`}: ${s.label}`;
-  return `<span class="chip ${st}" role="img" aria-label="${esc(text)}" title="${esc(text)}">${day}${s.mark ? ` ${s.mark}` : ''}</span>`;
+  return `<span class="chip ${st}" role="img" aria-label="${esc(text)}" title="${esc(text)}">${[day, s.mark].filter(Boolean).join(' ') || '&nbsp;'}</span>`;
 }
 
 function chips(p, sig) {
@@ -78,8 +78,6 @@ function radarView() {
   const late = open.filter(t => D.diff(now, t.deadline) > 0).length;
   const shown = rows.filter(r => (!ui.dept || r.u.dept === ui.dept) && (!ui.level || r.sig.level === ui.level));
   const depts = [...new Set(UNITS.map(u => u.dept))].map(d => [d, d]);
-  const early = HISTORY.byDept.reduce((s, d) => s + d.early, 0);
-  const hired = HISTORY.byDept.reduce((s, d) => s + d.hired, 0);
 
   return `
   <section class="kpis" aria-label="Сводка">
@@ -87,6 +85,14 @@ function radarView() {
     ${kpi(count('red'), 'в зоне риска', 'red')}
     ${kpi(count('yellow'), 'требуют внимания', 'yellow')}
     ${kpi(`${open.length} / ${late}`, 'задач открыто / просрочено')}
+  </section>
+
+  <section class="panel">
+    <h2>Статистика ухода новичков за 12 месяцев</h2>
+    <div class="cols">
+      <div><h3>По подразделениям: ушли до 90 дней / принято</h3>${bars(HISTORY.byDept.map(d => ({ label: d.dept, value: d.early / d.hired, text: `${d.early} / ${d.hired} · ${Math.round(d.early / d.hired * 100)}%` })))}</div>
+      <div><h3>По сроку ухода, человек</h3>${bars(HISTORY.byPeriod.map(d => ({ label: d.label, value: d.n, text: `${d.n}` })))}</div>
+    </div>
   </section>
 
   <section class="panel">
@@ -110,15 +116,6 @@ function radarView() {
       </tbody>
     </table></div>
     <p class="legend">Контрольные точки — дни 1, 7, 30, 60, 85: ${Object.entries(CP_STATES).map(([st, s]) => `${chip('', st)} ${s.label}`).join('')}</p>
-  </section>
-
-  <section class="panel">
-    <h2>Где теряем новичков: история за 12 месяцев</h2>
-    <p class="muted">Из ${hired} принятых ${early} ушли до 90-го дня. Две трети ранних уходов приходятся на первый месяц, поэтому контрольные точки стоят плотнее в начале.</p>
-    <div class="cols">
-      <div><h3>По подразделениям: ушли до 90 дней / принято</h3>${bars(HISTORY.byDept.map(d => ({ label: d.dept, value: d.early / d.hired, text: `${d.early} / ${d.hired} · ${Math.round(d.early / d.hired * 100)}%` })))}</div>
-      <div><h3>По сроку ухода, человек</h3>${bars(HISTORY.byPeriod.map(d => ({ label: d.label, value: d.n, text: `${d.n}` })))}</div>
-    </div>
   </section>`;
 }
 
