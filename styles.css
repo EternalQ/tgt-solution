@@ -175,6 +175,9 @@ dialog::backdrop { background: rgba(20, 26, 38, .45); }
 .late-text { color: var(--yellow); font-weight: 600; }
 
 .solo-note { text-align: center; color: var(--muted); font-size: 13px; }
+.back { max-width: 520px; width: 100%; margin: 0 auto; }
+.back a { display: inline-block; padding: 8px 0; font-weight: 600; text-decoration: none; }
+.back a:hover { text-decoration: underline; }
 .phone { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 20px; display: grid; gap: 14px; }
 .phone h2 { font-size: 20px; margin: 0; }
 .phone fieldset { border: none; margin: 0; padding: 0; }

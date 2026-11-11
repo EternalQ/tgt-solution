@@ -252,9 +252,10 @@ function pulseForm(id) {
   if (!pl) return '<section class="panel narrow"><p class="empty">Опрос не найден. <a href="#/pulse">К списку опросов</a></p></section>';
   const p = person(pl.personId);
   const firstName = esc(p.name.split(' ')[0]);
+  const back = '<p class="back"><a href="#/pulse">← К списку опросов</a></p>';
   if (pl.answered) {
     const mine = ui.done && ui.done.id === id;
-    return `
+    return `${back}
     <section class="phone">
       <h2>Спасибо${mine ? `, ${firstName}` : ''}!</h2>
       <p>${mine ? 'Ответы записаны.' : `Опрос пройден ${D.fmt(pl.answered)}.`}</p>
@@ -263,7 +264,7 @@ function pulseForm(id) {
       ? `Сотрудник этого не видит: руководителю ${esc(UNITS[p.u].manager)} поставлена срочная задача, в радаре статус стал «Риск».`
       : 'Сотрудник этого не видит: ответы появились в его карточке в радаре.'} <a href="#/radar">Открыть радар HR</a></p>`;
   }
-  return `
+  return `${back}
   <p class="solo-note">Так опрос видит сотрудник на телефоне</p>
   <form class="phone" data-form="pulse" data-id="${pl.id}">
     <h2>${firstName}, как вам работается?</h2>
