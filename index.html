@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Новичок: первые 90 дней</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <h1 class="brand">Новичок <span>первые 90 дней</span></h1>
+  <nav id="nav" aria-label="Разделы">
+    <a href="#/radar" data-tab="radar">Радар HR</a>
+    <a href="#/manager" data-tab="manager">Задачи руководителя</a>
+    <a href="#/pulse" data-tab="pulse">Опрос новичка</a>
+    <a href="#/log" data-tab="log">Журнал Б24</a>
+  </nav>
+</header>
+
+<section class="demo" aria-label="Управление демо">
+  <div class="demo-row">
+    <span class="badge">Демо</span>
+    <span>Сегодня <b id="clock"></b></span>
+    <button class="ghost" data-act="shift" data-days="1">+1 день</button>
+    <button class="ghost" data-act="shift" data-days="7">+7 дней</button>
+    <button class="ghost" data-act="hire">Принять новичка в Б24</button>
+    <span class="spacer"></span>
+    <button class="ghost" data-act="reset">Сбросить демо</button>
+  </div>
+  <details class="howto">
+    <summary>Как проверить основной сценарий за 2 минуты</summary>
+    <ol>
+      <li><b>Радар HR.</b> Красные сверху. Откройте карточку любого новичка: видны контрольные точки, разговоры и ответы.</li>
+      <li><b>Опрос новичка.</b> Откройте любой опрос и ответьте «Нет» хотя бы на один вопрос.</li>
+      <li><b>Радар HR.</b> Сотрудник стал красным. В «Задачах руководителя» появилась срочная задача, в «Журнале Б24» — вызов <code>tasks.task.add</code>.</li>
+      <li><b>Задачи руководителя.</b> Закройте срочную задачу с исходом «Есть проблема». Сигнал уходит HR, в карточке появляется поле «Что сделано по сигналу».</li>
+      <li><b>+7 дней.</b> Наступают новые контрольные точки, незакрытые задачи становятся просроченными.</li>
+    </ol>
+    <p>Все люди и цифры вымышлены. Интеграция с Битрикс24 — мок: формат вызовов как у REST API, запросы никуда не уходят. Данные хранятся в этом браузере.</p>
+  </details>
+</section>
+
+<main id="view"></main>
+<dialog id="card" aria-labelledby="card-title"></dialog>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
